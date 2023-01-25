@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "447435e3-15cc-4e31-aa7d-5e5d22b69f63",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "cd1497c8-5b12-4fed-a6d2-65c9833a1176",
+    "name": "Create Book",
+    "url": "{{URL}}/books",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2023-01-24T23:28:00.774Z",
+    "modified": "2023-01-24T23:30:09.538Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"code\": \"NRN-7\",\n  \"title\": \"The Lion, the Witch and the Wardrobe\",\n  \"author\": \"C.S. Lewis\",\n  \"stock\": 1\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]

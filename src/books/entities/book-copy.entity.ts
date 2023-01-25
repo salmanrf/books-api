@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Book } from './book.entity';
 
@@ -29,4 +31,10 @@ export class BookCopy {
   @ManyToOne(() => Book, (b) => b.book_id)
   @JoinColumn({ name: 'book_id' })
   book: Book;
+
+  @CreateDateColumn()
+  created_at: Date | string;
+
+  @UpdateDateColumn()
+  updated_at: Date | string;
 }

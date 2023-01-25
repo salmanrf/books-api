@@ -1,0 +1,4 @@
+export const BOOK_COPY_STATUS = {
+  AVAILABLE: 'AVAILABLE',
+  BORROWED: 'BORROWED',
+};
