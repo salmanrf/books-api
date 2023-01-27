@@ -26,8 +26,8 @@ import { BookCopy } from './book-copy.entity';
       .groupBy('bc.book_id'),
 })
 export class BookStockView {
-  @ViewColumn()
   book_id: string;
+  @ViewColumn()
 
   @ViewColumn()
   stock: number;
@@ -42,8 +42,11 @@ export class Book {
         book_id: this.book_id,
         stock: 0
       }
-      this.stock = this.book_stock.stock
     }
+
+    this.stock = this.book_stock.stock
+
+    delete this.book_stock
   }
   
   @PrimaryGeneratedColumn('uuid')
@@ -59,7 +62,7 @@ export class Book {
   author: string;
 
   @OneToMany(() => BookCopy, (bc) => bc.book, {cascade: ["remove"]})
-  copies: BookCopy;
+  copies: BookCopy[];
 
   @CreateDateColumn()
   created_at: Date | string;

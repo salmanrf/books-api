@@ -1,0 +1,4 @@
+export const BOOK_BORROW_STATUS = {
+  ONGOING: 'ONGOING',
+  RETURNED: 'RETURNED',
+};

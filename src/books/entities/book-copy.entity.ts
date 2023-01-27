@@ -1,3 +1,4 @@
+import { BookBorrow } from 'src/book-borrows/entities/book-borrow.entity';
 import { BOOK_COPY_STATUS } from 'src/common/helpers/book.helper';
 import {
   Column,
@@ -5,6 +6,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -33,6 +35,9 @@ export class BookCopy {
   @JoinColumn({ name: 'book_id' })
   book: Book;
 
+  @OneToMany(() => BookBorrow, (bc) => bc.book_copy)
+  book_borrows: BookBorrow[];
+  
   @CreateDateColumn()
   created_at: Date | string;
 

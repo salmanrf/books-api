@@ -5,7 +5,7 @@ import { ILike, Repository } from 'typeorm';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { FindMemberDto } from './dto/find-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
-import { Member } from './entities/member.entity';
+import { Member, MemberBookBorrowCountView } from './entities/member.entity';
 
 @Injectable()
 export class MembersService {
@@ -36,6 +36,17 @@ export class MembersService {
 
       const memberQb = this.memberRepo.createQueryBuilder('m');
 
+      memberQb.leftJoinAndSelect(
+        "m.book_borrows",
+        "mbbs"
+      )
+      memberQb.leftJoinAndMapOne(
+        "m.borrows",
+        MemberBookBorrowCountView,
+        "mbc",
+        "mbc.member_id = m.member_id"
+      )
+      
       const fields = ['code', 'name', 'created_at'];
       const orders = ['ASC', 'DESC'];
 

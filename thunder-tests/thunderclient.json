@@ -23,11 +23,11 @@
     "colId": "9e957523-de96-412c-9f84-c29d630d1115",
     "containerId": "cd1497c8-5b12-4fed-a6d2-65c9833a1176",
     "name": "Find Book",
-    "url": "{{URL}}/books?page=1&limit=5",
+    "url": "{{URL}}/books?page=1&limit=10",
     "method": "GET",
     "sortNum": 30000,
     "created": "2023-01-26T14:57:02.360Z",
-    "modified": "2023-01-27T08:11:43.155Z",
+    "modified": "2023-01-27T13:00:53.194Z",
     "headers": [],
     "params": [
       {
@@ -37,7 +37,7 @@
       },
       {
         "name": "limit",
-        "value": "5",
+        "value": "10",
         "isPath": false
       }
     ],
@@ -177,6 +177,44 @@
     "body": {
       "type": "json",
       "raw": "{\n  \"name\": \"Victoria Legrand\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "4f82968e-7b71-4541-a090-43f1b2e42749",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "deac58d2-142e-4157-b060-7129ce424cd8",
+    "name": "Book Borrow",
+    "url": "{{URL}}/books/borrow",
+    "method": "POST",
+    "sortNum": 40000,
+    "created": "2023-01-27T13:00:15.791Z",
+    "modified": "2023-01-27T14:22:05.968Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"book_id\": \"19b2225a-40d3-40f9-92db-0ba6c7b0c468\",\n  \"member_id\": \"faed6dce-5b9d-4968-9ff0-ef73f36196ab\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "85497993-a1d2-4fd7-8efb-41ae2194c749",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "deac58d2-142e-4157-b060-7129ce424cd8",
+    "name": "Book Return",
+    "url": "{{URL}}/books/borrow/return",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2023-01-27T13:24:23.042Z",
+    "modified": "2023-01-27T13:33:53.693Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"book_copy_id\": \"30239d4e-a361-4fda-8916-38b4cca7a97f\",\n  \"member_id\": \"faed6dce-5b9d-4968-9ff0-ef73f36196ab\"\n}",
       "form": []
     },
     "tests": []

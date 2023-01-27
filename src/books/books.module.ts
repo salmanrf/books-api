@@ -9,5 +9,6 @@ import { BookCopy } from './entities/book-copy.entity';
   imports: [TypeOrmModule.forFeature([Book, BookCopy])],
   controllers: [BooksController],
   providers: [BooksService],
+  exports: [BooksService]
 })
 export class BooksModule {}

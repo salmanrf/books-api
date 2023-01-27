@@ -6,7 +6,7 @@ import {
   GetPaginatedData,
   GetPagination,
 } from 'src/common/utils/pagination.util';
-import { ILike, Repository } from 'typeorm';
+import { ILike, QueryResult, QueryRunner, Repository } from 'typeorm';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FindBookDto } from './dto/find-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -18,13 +18,13 @@ export class BooksService {
   constructor(
     @InjectRepository(Book) private readonly bookRepo: Repository<Book>,
     @InjectRepository(BookCopy)
-    private readonly bookCpyRepo: Repository<BookCopy>,
+    private readonly bookCopyRepo: Repository<BookCopy>,
   ) {}
 
   async create(createBookDto: CreateBookDto) {
     try {
       const newBook = await this.bookRepo.save(createBookDto);
-      const newBookCpy = await this.bookCpyRepo.save({
+      const newBookCpy = await this.bookCopyRepo.save({
         book_id: newBook.book_id,
         status: BOOK_COPY_STATUS.AVAILABLE,
       });
@@ -103,9 +103,21 @@ export class BooksService {
     }
   }
 
-  async findOne(book_id: string) {
+  async findOne(book_id: string, crit?: {stock_available: boolean} & Partial<Book>) {
     try {
-      const book = await this.bookRepo.findOne({ where: { book_id } });
+      const {stock_available, stock, book_stock, copies, defaultBookStock, ...criteria} = crit ?? {}
+      const bookQb = this.bookRepo.createQueryBuilder("b");
+
+      bookQb.where({
+        book_id, 
+        ...criteria
+      })
+
+      if(stock_available) {
+        bookQb.innerJoin("b.copies", "bc", "status = :status_available AND borrower_id IS NULL", {status_available: BOOK_COPY_STATUS.AVAILABLE})
+      }
+      
+      const book = await bookQb.getOne()
 
       if (!book) {
         throw new NotFoundException("Can't find book.");
@@ -113,6 +125,17 @@ export class BooksService {
 
       return book;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  async findOneCopy(crit: Partial<BookCopy>) {
+    try {
+      const {book, book_borrows, ...criteria} = crit;
+      const bookCopy = await this.bookCopyRepo.findOne({where: {...criteria}})
+
+      return bookCopy;
+    } catch(error) {
       throw error;
     }
   }
@@ -145,6 +168,17 @@ export class BooksService {
 
       throw error;
     }
+  }
+
+  async updateCopy(book_copy_id: string, parameters: Partial<BookCopy>, qr?: QueryRunner) {
+    if(qr) {
+      return qr.manager.save(BookCopy, {
+        book_copy_id,
+        ...parameters
+      });
+    }
+
+    return this.bookCopyRepo.save({book_copy_id, ...parameters});
   }
 
   async delete(book_id: string) {
