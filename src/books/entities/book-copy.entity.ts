@@ -1,3 +1,4 @@
+import { BOOK_COPY_STATUS } from 'src/common/helpers/book.helper';
 import {
   Column,
   CreateDateColumn,
@@ -24,7 +25,7 @@ export class BookCopy {
     type: 'varchar',
     length: 25,
     nullable: false,
-    default: 'AVAILABLE',
+    default: BOOK_COPY_STATUS.AVAILABLE,
   })
   status: string;
 

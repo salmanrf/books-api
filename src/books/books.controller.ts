@@ -4,7 +4,7 @@ import {
   Post,
   Body,
   Query,
-  Patch,
+  Put,
   Param,
   Delete,
 } from '@nestjs/common';
@@ -33,9 +33,9 @@ export class BooksController {
   }
 
   @Get()
-  async findAll(@Query() findDto: FindBookDto) {
+  async findMany(@Query() findDto: FindBookDto) {
     try {
-      const res = await this.booksService.findAll(findDto);
+      const res = await this.booksService.findMany(findDto);
 
       return {
         status: true,
@@ -46,14 +46,35 @@ export class BooksController {
     }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.booksService.findOne(+id);
+  @Get(':book_id')
+  async findOne(@Param('book_id') book_id: string) {
+    try {
+      const res = await this.booksService.findOne(book_id);
+
+      return {
+        status: true,
+        data: res,
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
-    return this.booksService.update(+id, updateBookDto);
+  @Put(':book_id')
+  async update(
+    @Param('book_id') book_id: string,
+    @Body() updateBookDto: UpdateBookDto,
+  ) {
+    try {
+      const res = await this.booksService.update(book_id, updateBookDto);
+
+      return {
+        status: true,
+        data: res,
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Delete(':id')

@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common/exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
+import { BOOK_COPY_STATUS } from 'src/common/helpers/book.helper';
 import {
   GetPaginatedData,
   GetPagination,
 } from 'src/common/utils/pagination.util';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FindBookDto } from './dto/find-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -24,7 +26,7 @@ export class BooksService {
       const newbook = await this.bookRepo.save(createBookDto);
       const newBookCpy = await this.bookCpyRepo.save({
         book_id: newbook.book_id,
-        status: 'AVAILABLE',
+        status: BOOK_COPY_STATUS.AVAILABLE,
       });
 
       newbook.stock = 1;
@@ -35,9 +37,9 @@ export class BooksService {
     }
   }
 
-  async findAll(findDto: FindBookDto) {
+  async findMany(findDto: FindBookDto) {
     try {
-      const { page, limit: pageSize } = findDto;
+      const { author, code, title, page, limit: pageSize } = findDto;
       let { sort_field, sort_order } = findDto;
 
       const { limit, offset } = GetPagination(+page, +pageSize);
@@ -46,6 +48,18 @@ export class BooksService {
 
       const fields = ['book_id', 'code', 'title', 'author', 'created_at'];
       const orders = ['ASC', 'DESC'];
+
+      if (author) {
+        bookQb.andWhere({ author: ILike('%:author%') }, { author });
+      }
+
+      if (code) {
+        bookQb.andWhere({ code: ILike('%:code%') }, { code });
+      }
+
+      if (title) {
+        bookQb.andWhere({ title: ILike('%:title%') }, { title });
+      }
 
       if (!fields.includes(sort_field)) {
         sort_field = 'created_at';
@@ -78,15 +92,47 @@ export class BooksService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  async findOne(book_id: string) {
+    try {
+      const book = await this.bookRepo.findOne({ where: { book_id } });
+
+      if (!book) {
+        throw new NotFoundException("Can't find book.");
+      }
+
+      return book;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  update(id: number, updateBookDto: UpdateBookDto) {
-    return `This action updates a #${id} book`;
+  async update(book_id: string, updateBookDto: UpdateBookDto) {
+    try {
+      const book = await this.bookRepo.findOne({ where: { book_id } });
+
+      if (!book) {
+        throw new NotFoundException("Can't find book.");
+      }
+
+      return this.bookRepo.save({ ...book, ...updateBookDto });
+    } catch (error) {
+      throw error;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  async delete(book_id: string) {
+    try {
+      const book = await this.bookRepo.findOne({ where: { book_id } });
+
+      if (!book) {
+        throw new NotFoundException("Can't find book.");
+      }
+
+      await this.bookRepo.delete({ book_id });
+
+      return book;
+    } catch (error) {
+      throw error;
+    }
   }
 }
