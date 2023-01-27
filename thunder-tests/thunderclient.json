@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-01-24T23:28:00.774Z",
-    "modified": "2023-01-27T07:49:29.027Z",
+    "modified": "2023-01-27T14:36:14.159Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"code\": \"NWD-1\",\n  \"title\": \"Norwegian Wood\",\n  \"author\": \"Haruki Murakami\",\n  \"stock\": 10\n}",
+      "raw": "{\n  \"code\": \"BCN-1\",\n  \"title\": \"Botchan\",\n  \"author\": \"Natsume Soseki\",\n  \"stock\": 10\n}",
       "form": []
     },
     "tests": []
@@ -190,12 +190,12 @@
     "method": "POST",
     "sortNum": 40000,
     "created": "2023-01-27T13:00:15.791Z",
-    "modified": "2023-01-27T14:22:05.968Z",
+    "modified": "2023-01-27T14:35:02.814Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"book_id\": \"19b2225a-40d3-40f9-92db-0ba6c7b0c468\",\n  \"member_id\": \"faed6dce-5b9d-4968-9ff0-ef73f36196ab\"\n}",
+      "raw": "{\n  \"book_id\": \"e158daa0-6aa6-498b-8292-3f529a42472f\",\n  \"member_id\": \"e632f11f-cd67-4c45-89cf-35a5af698bcc\"\n}",
       "form": []
     },
     "tests": []
@@ -215,6 +215,25 @@
     "body": {
       "type": "json",
       "raw": "{\n  \"book_copy_id\": \"30239d4e-a361-4fda-8916-38b4cca7a97f\",\n  \"member_id\": \"faed6dce-5b9d-4968-9ff0-ef73f36196ab\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "17824787-6276-497f-8713-35fe42adfd92",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "cd1497c8-5b12-4fed-a6d2-65c9833a1176",
+    "name": "Create Book Copies",
+    "url": "{{URL}}/books/copies",
+    "method": "POST",
+    "sortNum": 25000,
+    "created": "2023-01-27T14:43:55.288Z",
+    "modified": "2023-01-27T14:48:08.818Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"book_id\": \"19b2225a-40d3-40f9-92db-0ba6c7b0c468\",\n  \"count\": 5\n}",
       "form": []
     },
     "tests": []

@@ -9,6 +9,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
+import { CreateBookCopiesDto } from './dto/create-book-copies.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FindBookDto } from './dto/find-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
@@ -26,6 +27,20 @@ export class BooksController {
         status: true,
         data: res,
         message: 'Created Successfully.',
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Post('/copies')
+  async createCopies(@Body() createCopiesDto: CreateBookCopiesDto) {
+    try {
+      const res = await this.booksService.createCopies(createCopiesDto);
+
+      return {
+        status: true,
+        data: res,
       };
     } catch (error) {
       throw error;
@@ -84,9 +99,9 @@ export class BooksController {
 
       return {
         status: true,
-        data: res
-      }
-    } catch(error) {
+        data: res,
+      };
+    } catch (error) {
       throw error;
     }
   }
