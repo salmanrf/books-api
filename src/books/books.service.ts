@@ -23,15 +23,15 @@ export class BooksService {
 
   async create(createBookDto: CreateBookDto) {
     try {
-      const newbook = await this.bookRepo.save(createBookDto);
+      const newBook = await this.bookRepo.save(createBookDto);
       const newBookCpy = await this.bookCpyRepo.save({
-        book_id: newbook.book_id,
+        book_id: newBook.book_id,
         status: BOOK_COPY_STATUS.AVAILABLE,
       });
 
-      newbook.stock = 1;
+      newBook.stock = 1
 
-      return newbook;
+      return newBook;
     } catch (error) {
       if(error.message.includes("duplicate key value violates unique constraint")) {
         throw new BadRequestException("Duplicate book code.");
@@ -96,8 +96,6 @@ export class BooksService {
         items: results[0],
         page: isNaN(+page) ? 1 : +page || 1,
       });
-
-      console.log('data', data);
 
       return data;
     } catch (error) {

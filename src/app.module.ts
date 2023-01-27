@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BooksModule } from './books/books.module';
+import { MembersModule } from './members/members.module';
 
 @Module({
   imports: [
-    BooksModule,
     TypeOrmModule.forRoot({
       host: process.env.DB_HOST,
       username: process.env.DB_USER,
@@ -18,6 +18,8 @@ import { BooksModule } from './books/books.module';
       logging: true,
       synchronize: true,
     }),
+    BooksModule,
+    MembersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

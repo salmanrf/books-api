@@ -89,5 +89,96 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "3d51fdab-6544-44d0-91b5-4ac7d60361b6",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "0613e1ab-a0e6-4729-bab1-f248dedc02cb",
+    "name": "Create Member",
+    "url": "{{URL}}/members",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2023-01-27T08:51:51.937Z",
+    "modified": "2023-01-27T10:27:21.136Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"code\": \"M004\",\n  \"name\": \"Alex Scally\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "962da21f-f516-492b-9444-8080e1aa2de1",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "0613e1ab-a0e6-4729-bab1-f248dedc02cb",
+    "name": "Find Member",
+    "url": "{{URL}}/members?page=1&limit=10",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2023-01-27T08:51:51.938Z",
+    "modified": "2023-01-27T10:25:14.807Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      },
+      {
+        "name": "limit",
+        "value": "10",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "eb52d432-7286-4f10-95ca-1f99fc7dba04",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "0613e1ab-a0e6-4729-bab1-f248dedc02cb",
+    "name": "Find One Member",
+    "url": "{{URL}}/members/faed6dce-5b9d-4968-9ff0-ef73f36196ab",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-01-27T08:51:51.939Z",
+    "modified": "2023-01-27T10:26:17.864Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "161508f8-5b2f-4e7d-bf73-f9ef68d2dd0d",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "0613e1ab-a0e6-4729-bab1-f248dedc02cb",
+    "name": "Delete Member",
+    "url": "{{URL}}/members/f858e57a-c605-4bc6-8fd2-185c1168123e",
+    "method": "DELETE",
+    "sortNum": 45000,
+    "created": "2023-01-27T08:51:51.940Z",
+    "modified": "2023-01-27T10:27:42.483Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "b01f267c-4325-49ca-8298-8e1509c2891c",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "0613e1ab-a0e6-4729-bab1-f248dedc02cb",
+    "name": "Update Member",
+    "url": "{{URL}}/members/faed6dce-5b9d-4968-9ff0-ef73f36196ab",
+    "method": "PUT",
+    "sortNum": 50000,
+    "created": "2023-01-27T08:51:51.941Z",
+    "modified": "2023-01-27T10:27:05.069Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"Victoria Legrand\"\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

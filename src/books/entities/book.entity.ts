@@ -42,6 +42,7 @@ export class Book {
         book_id: this.book_id,
         stock: 0
       }
+      this.stock = this.book_stock.stock
     }
   }
   
