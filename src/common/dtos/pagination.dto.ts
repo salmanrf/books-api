@@ -15,7 +15,7 @@ export class PaginationRequest {
 
   @IsString()
   @IsOptional()
-  sort_order: string;
+  sort_order: 'ASC' | 'DESC';
 }
 
 export class PaginatedResponse<T> {

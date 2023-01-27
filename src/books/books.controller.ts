@@ -3,12 +3,14 @@ import {
   Get,
   Post,
   Body,
+  Query,
   Patch,
   Param,
   Delete,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
+import { FindBookDto } from './dto/find-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
 @Controller('api/books')
@@ -31,8 +33,17 @@ export class BooksController {
   }
 
   @Get()
-  findAll() {
-    return this.booksService.findAll();
+  async findAll(@Query() findDto: FindBookDto) {
+    try {
+      const res = await this.booksService.findAll(findDto);
+
+      return {
+        status: true,
+        data: res,
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Get(':id')
