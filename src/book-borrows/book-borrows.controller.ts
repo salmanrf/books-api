@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { BookBorrowsService } from './book-borrows.service';
 import { BookBorrowDto } from './dto/book-borrow.dto';
 import { BookReturnDto } from './dto/book-return.dto';
 
+@ApiTags('book-borrows')
 @Controller('api/books/borrow')
 export class BookBorrowsController {
   constructor(private readonly bookBorrowsService: BookBorrowsService) {}

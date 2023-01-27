@@ -8,12 +8,14 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { BooksService } from './books.service';
 import { CreateBookCopiesDto } from './dto/create-book-copies.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FindBookDto } from './dto/find-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
+@ApiTags('books')
 @Controller('api/books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}

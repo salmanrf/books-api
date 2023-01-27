@@ -1,23 +1,37 @@
-import { Controller, Get, Post, Body, Param, Delete, Query, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+  Put,
+} from '@nestjs/common';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { FindMemberDto } from './dto/find-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { MembersService } from './members.service';
 
+@ApiTags('members')
 @Controller('api/members')
 export class MembersController {
   constructor(private readonly membersService: MembersService) {}
 
   @Post()
+  @ApiCreatedResponse({
+    description: 'Member create success',
+  })
   async create(@Body() createMemberDto: CreateMemberDto) {
     try {
       const res = await this.membersService.create(createMemberDto);
 
       return {
         status: true,
-        data: res
-      }
-    } catch(error) {
+        data: res,
+      };
+    } catch (error) {
       throw error;
     }
   }
@@ -74,9 +88,9 @@ export class MembersController {
 
       return {
         status: true,
-        data: res
-      }
-    } catch(error) {
+        data: res,
+      };
+    } catch (error) {
       throw error;
     }
   }
