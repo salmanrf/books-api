@@ -1,4 +1,3 @@
-import { count } from 'console';
 import { PaginatedResponse } from '../dtos/pagination.dto';
 
 export interface GetPaginatedDataInput<T> {
@@ -13,7 +12,7 @@ export interface GetPaginatedDataInput<T> {
 export function GetPagination(
   page: number,
   page_size: number,
-): { offset: number; limit: number } {
+): { offset: number; limit: number | null } {
   let pageNumber = +page;
   let pageSize = +page_size;
 
@@ -22,10 +21,14 @@ export function GetPagination(
   }
 
   if (isNaN(pageSize)) {
-    pageSize = 10;
+    pageSize = null;
   }
 
-  const offset = pageNumber < 1 ? 0 : (pageNumber - 1) * pageSize;
+  let offset = 0;
+  
+  if(pageSize != null) {
+    offset = pageNumber < 1 ? 0 : (pageNumber - 1) * pageSize;
+  }
 
   return {
     offset,
@@ -40,12 +43,19 @@ export function GetPaginatedData<T>(
 
   const total_pages = Math.ceil(count / limit);
 
-  return {
+  const paginatedData = {
     total_pages,
     sort_field,
     sort_order,
     page,
     limit,
     items,
-  };
+    total_items: count
+  }
+  
+  if(limit == null) {
+    paginatedData.total_pages = 1;
+  }
+  
+  return paginatedData;
 }

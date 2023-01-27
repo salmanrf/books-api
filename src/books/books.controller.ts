@@ -77,8 +77,17 @@ export class BooksController {
     }
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.booksService.remove(+id);
+  @Delete(':book_id')
+  async remove(@Param('book_id') book_id: string) {
+    try {
+      const res = await this.booksService.delete(book_id);
+
+      return {
+        status: true,
+        data: res
+      }
+    } catch(error) {
+      throw error;
+    }
   }
 }

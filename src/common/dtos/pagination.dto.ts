@@ -7,7 +7,7 @@ export class PaginationRequest {
 
   @IsNumberString()
   @IsOptional()
-  limit: number | string;
+  limit?: number | string | null;
 
   @IsString()
   @IsOptional()
@@ -19,6 +19,7 @@ export class PaginationRequest {
 }
 
 export class PaginatedResponse<T> {
+  total_items: number;
   total_pages: number;
   page: number;
   limit: number;

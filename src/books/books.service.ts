@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { NotFoundException } from '@nestjs/common/exceptions';
+import { BadRequestException, NotFoundException } from '@nestjs/common/exceptions';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BOOK_COPY_STATUS } from 'src/common/helpers/book.helper';
 import {
@@ -11,7 +11,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { FindBookDto } from './dto/find-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { BookCopy } from './entities/book-copy.entity';
-import { Book } from './entities/book.entity';
+import { Book, BookStockView } from './entities/book.entity';
 
 @Injectable()
 export class BooksService {
@@ -33,6 +33,10 @@ export class BooksService {
 
       return newbook;
     } catch (error) {
+      if(error.message.includes("duplicate key value violates unique constraint")) {
+        throw new BadRequestException("Duplicate book code.");
+      }
+      
       throw error;
     }
   }
@@ -69,10 +73,19 @@ export class BooksService {
         sort_order = 'DESC';
       }
 
-      bookQb.take(limit);
+      bookQb.leftJoinAndMapOne(
+        "b.book_stock",
+        BookStockView,
+        "bsv",
+        "bsv.book_id = b.book_id"
+      )
+
+      if(limit != null) {
+        bookQb.take(limit);
+      }
       bookQb.skip(offset);
 
-      bookQb.addOrderBy(sort_field, sort_order);
+      bookQb.addOrderBy("b." + sort_field, sort_order);
 
       const results = await bookQb.getManyAndCount();
       const data = GetPaginatedData({
@@ -108,14 +121,30 @@ export class BooksService {
 
   async update(book_id: string, updateBookDto: UpdateBookDto) {
     try {
+      const {author, code, title} = updateBookDto
       const book = await this.bookRepo.findOne({ where: { book_id } });
 
       if (!book) {
         throw new NotFoundException("Can't find book.");
       }
 
-      return this.bookRepo.save({ ...book, ...updateBookDto });
+      if(author != null) {
+        book.author = author
+      }
+
+      if(code != null) {
+        book.code = code
+      }
+      if(title != null) {
+        book.title = title
+      }
+      
+      return this.bookRepo.save(book);
     } catch (error) {
+      if(error.message.includes("duplicate key value violates unique constraint")) {
+        throw new BadRequestException("Duplicate book code.");
+      }
+
       throw error;
     }
   }
@@ -128,7 +157,7 @@ export class BooksService {
         throw new NotFoundException("Can't find book.");
       }
 
-      await this.bookRepo.delete({ book_id });
+      await this.bookRepo.softDelete({ book_id });
 
       return book;
     } catch (error) {

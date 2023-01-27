@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-01-24T23:28:00.774Z",
-    "modified": "2023-01-24T23:30:09.538Z",
+    "modified": "2023-01-27T07:49:29.027Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"code\": \"NRN-7\",\n  \"title\": \"The Lion, the Witch and the Wardrobe\",\n  \"author\": \"C.S. Lewis\",\n  \"stock\": 1\n}",
+      "raw": "{\n  \"code\": \"NWD-1\",\n  \"title\": \"Norwegian Wood\",\n  \"author\": \"Haruki Murakami\",\n  \"stock\": 10\n}",
       "form": []
     },
     "tests": []
@@ -23,11 +23,69 @@
     "colId": "9e957523-de96-412c-9f84-c29d630d1115",
     "containerId": "cd1497c8-5b12-4fed-a6d2-65c9833a1176",
     "name": "Find Book",
-    "url": "{{URL}}/books",
+    "url": "{{URL}}/books?page=1&limit=5",
     "method": "GET",
     "sortNum": 30000,
     "created": "2023-01-26T14:57:02.360Z",
-    "modified": "2023-01-26T14:57:26.664Z",
+    "modified": "2023-01-27T08:11:43.155Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      },
+      {
+        "name": "limit",
+        "value": "5",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "c0dbeb8e-d7b7-4a09-b6c2-164066559257",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "cd1497c8-5b12-4fed-a6d2-65c9833a1176",
+    "name": "Find One Book",
+    "url": "{{URL}}/books/a977c423-a23c-48d4-ab0d-0181203c2393",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-01-27T07:25:49.688Z",
+    "modified": "2023-01-27T07:30:50.927Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "e8519c2c-137d-4b7a-86c5-a16670ccc58a",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "cd1497c8-5b12-4fed-a6d2-65c9833a1176",
+    "name": "Update Book",
+    "url": "{{URL}}/books/a977c423-a23c-48d4-ab0d-0181203c2393",
+    "method": "PUT",
+    "sortNum": 50000,
+    "created": "2023-01-27T07:30:06.451Z",
+    "modified": "2023-01-27T07:48:58.140Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"title\": \"I am a cat\",\n  \"author\": \"Natsume Soseki\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "5fcc9041-667d-4bfa-bf6a-fb77ae40586b",
+    "colId": "9e957523-de96-412c-9f84-c29d630d1115",
+    "containerId": "cd1497c8-5b12-4fed-a6d2-65c9833a1176",
+    "name": "Delete Book",
+    "url": "{{URL}}/books/8666cf42-1b7a-4a0e-a3b6-cc8f7178bf83",
+    "method": "DELETE",
+    "sortNum": 45000,
+    "created": "2023-01-27T07:50:21.630Z",
+    "modified": "2023-01-27T07:57:44.745Z",
     "headers": [],
     "params": [],
     "tests": []
